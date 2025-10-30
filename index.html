@@ -1079,7 +1079,7 @@ footer .linkedin-link:hover svg {
 
   <!-- Traveling -->
   <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;">
-    <img src="travel.avif" alt="People cooking together" width="350">
+    <img src="travel.jpeg" alt="People cooking together" width="350">
 
     <div style="flex:1;min-width:220px;">
       <p style="margin-bottom:8px;"><strong>Traveling</strong></p>
@@ -1099,7 +1099,7 @@ footer .linkedin-link:hover svg {
      <a href="https://www.linkedin.com/in/aya-najahi-86b1b1387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="cv-btn linkedin-btn">
     🔗 My LinkedIn
   </a>
-    <a href="CV_Aya_Najahi_EN.pdf" target="_blank" class="cv-btn">📄 Resume in English</a>
+    <a href="cv ang.pdf" target="_blank" class="cv-btn">📄 Resume in English</a>
   </div>
 
   <!-- Career Options -->
@@ -1146,20 +1146,29 @@ footer .linkedin-link:hover svg {
   </footer>
 
   <script>
+  document.addEventListener('DOMContentLoaded', () => {
     const navLinks = document.querySelectorAll('nav a');
-    const sections = document.querySelectorAll('header, section');
+    const sections = document.querySelectorAll('section');
+
+    function showSection(targetId) {
+      sections.forEach(sec => {
+        sec.classList.toggle('active', sec.id === targetId);
+      });
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     navLinks.forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
         const target = link.getAttribute('data-target');
-        sections.forEach(sec => {
-          sec.classList.remove('active');
-          if (sec.id === target) sec.classList.add('active');
-        });
-        window.scrollTo({ top: 0, behavior: 'smooth' });
+        showSection(target);
       });
     });
-  </script>
+
+    // Afficher la section "home" au chargement
+    showSection('home');
+  });
+</script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
   const careerCards = document.querySelectorAll('.career-card');
@@ -1282,3 +1291,4 @@ We discussed key challenges in cybersecurity and essential skills for protecting
 
 </body>
 </html>
+
