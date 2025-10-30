@@ -1,1073 +1,1175 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aya Najahi - Engineering Portfolio</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        /* Espacement entre le titre "Sport & Other Activities" et le contenu */
-        #sports h2 {
-            margin-bottom: 40px; /* ajoute de l’espace sous le titre */
-        }
-        /* Espacement supplémentaire entre chaque bloc d’activité */
-        #sports > div {
-            margin-top: 25px;
-        }
-        body {
-            background: #f9fafc;
-            color: #333;
-            line-height: 1.6;
-            scroll-behavior: smooth;
-        }
-        /* Navigation */
-        nav {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            padding: 15px 0;
-            z-index: 1000;
-        }
-        nav a {
-            color: #1a1f71;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-        nav a:hover {
-            color: #f1c40f;
-        }
-        /* Sections */
-        section {
-            display: none !important; /* Force le masquage par défaut */
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-            padding: 100px 20px 60px;
-        }
-        section.active {
-            display: block !important; /* Force l'affichage standard des sections */
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* CORRECTION: Appliquer display: flex UNIQUEMENT à Home quand elle est active */
-        #home.active {
-            display: flex !important; 
-        }
-        
-        /* Footer style modernisé avec email + LinkedIn à droite */
-        footer {
-            position: relative;
-            background: #1a1f71;
-            color: white;
-            padding: 18px 20px;
-            font-size: 0.9rem;
-            margin-top: 60px;
-            text-align: center;
-        }
-        /* Conteneur à droite */
-        .footer-right {
-            position: absolute;
-            right: 20px;
-            bottom: 18px;
-            display: flex;
-            align-items: center;
-            gap: 30px;
-        }
-        /* Email link */
-        footer .email-link {
-            color: #f1c40f;
-            text-decoration: none;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
-        footer .email-link:hover {
-            color: white;
-            text-decoration: underline;
-        }
-        /* LinkedIn icon link */
-        footer .linkedin-link svg {
-            transition: transform 0.3s ease, fill 0.3s ease;
-        }
-        footer .linkedin-link:hover svg {
-            transform: scale(1.2);
-            fill: white;
-        }
-        /* Responsive – recentre sur mobile */
-        @media (max-width: 600px) {
-            footer {
-                text-align: center;
-            }
-            .footer-right {
-                position: static;
-                justify-content: center;
-                margin-top: 8px;
-            }
-        }
-        /* === Bandeau Intro / Home Section === */
-        #home {
-            min-height: 100vh;
-            flex-direction: column; /* display: flex; a été retiré ici pour la correction */
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            background: linear-gradient(120deg, #ffffff, #f0f3f9);
-            animation: fadeSlideIn 1.5s ease-out forwards;
-            opacity: 0; /* Important pour l'animation au premier chargement */
-            transform: translateY(40px); /* Important pour l'animation au premier chargement */
-        }
-        @keyframes fadeSlideIn {
-            0% {
-                opacity: 0;
-                transform: translateY(40px);
-                filter: blur(6px);
-            }
-            60% {
-                opacity: 0.8;
-                transform: translateY(10px);
-                filter: blur(2px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-                filter: blur(0);
-            }
-        }
-        #home img {
-            width: 160px;
-            height: 160px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 4px solid #f1c40f;
-            margin-bottom: 20px;
-            animation: zoomIn 1.2s ease-out 0.3s forwards;
-            opacity: 0;
-        }
-        @keyframes zoomIn {
-            from {
-                transform: scale(0.8);
-                opacity: 0;
-            }
-            to {
-                transform: scale(1);
-                opacity: 1;
-            }
-        }
-        #home h1 {
-            font-size: 2.3rem;
-            color: #1a1f71;
-            margin-bottom: 10px;
-            opacity: 0;
-            animation: fadeTextIn 1s ease-out 0.6s forwards;
-        }
-        #home p {
-            max-width: 700px;
-            font-size: 1.1rem;
-            color: #444;
-            margin: 0 auto 30px;
-            opacity: 0;
-            animation: fadeTextIn 1.2s ease-out 1s forwards;
-        }
-        @keyframes fadeTextIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        .buttons {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-            opacity: 0;
-            animation: fadeTextIn 1s ease-out 1.3s forwards;
-        }
-        .buttons a {
-            text-decoration: none;
-            background: #1a1f71;
-            color: white;
-            padding: 12px 28px;
-            border-radius: 30px;
-            font-weight: 600;
-            transition: 0.3s;
-        }
-        .buttons a:hover {
-            background: #f1c40f;
-            color: #1a1f71;
-        }
-        /* Other Sections */
-        section:not(#home) {
-            max-width: 950px;
-            margin: 120px auto;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            padding: 40px 50px;
-        }
-        section h2 {
-            font-size: 1.9rem;
-            color: #1a1f71;
-            border-left: 5px solid #f1c40f;
-            padding-left: 10px;
-            margin-bottom: 25px;
-        }
-        section p {
-            margin-bottom: 15px;
-            color: #444;
-        }
-        
-        /* Styles spécifiques au pied de page déjà définis ci-dessus */
-        
-        /* Sustainability section cards */
-        #sustainability {
-            background: #f0f7fb;
-            padding: 60px 40px;
-            border-radius: 15px;
-            margin-top: 60px;
-        }
-        #sustainability h2 {
-            color: #1a1f71;
-            text-align: center;
-            margin-bottom: 25px;
-            font-size: 1.9rem;
-        }
-        #sustainability > p {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 40px;
-            color: #444;
-            font-size: 1.05rem;
-        }
-        .civic-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-        }
-        .civic-card {
-            background:linear-gradient(135deg, #eef5fa, #f9fcff) ;
-            border-radius: 15px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            padding: 25px;
-            flex: 1;
-            min-width: 290px;
-            max-width: 400px;
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .civic-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-        }
-        .civic-card h3 {
-            color: #1a1f71;
-            font-size: 1.1rem;
-            margin-top: 8px;
-        }
-        #sustainability blockquote {
-            margin-top: 40px;
-            text-align: center;
-            font-style: italic;
-            color: #1a1f71;
-            font-size: 1rem;
-        }
-        /* === MOBILITY SECTION === */
-        #mobility {
-            width: 100%;
-            background: linear-gradient(120deg, #f9fbff, #eef3fb);
-            border-radius: 15px;
-            padding: 80px 60px;
-            margin-top: 70px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-        }
-        #mobility h2 {
-            text-align: center;
-            color: #1a1f71;
-            font-size: 2rem;
-            margin-bottom: 25px;
-        }
-        #mobility .intro {
-            text-align: center;
-            max-width: 950px;
-            margin: 0 auto 60px;
-            color: #444;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-        /* === Container global === */
-        .mobility-container {
-            display: flex;
-            flex-direction: column;
-            gap: 50px;
-            align-items: center;
-        }
-        /* === Carte de mobilité === */
-        .mobility-card {
-            display: flex;
-            align-items: center;
-            gap: 40px;
-            background: #fff;
-            border-radius: 25px;
-            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-            padding: 40px;
-            max-width: 1100px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .mobility-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
-        }
-        /* === Image === */
-        .mobility-image {
-            flex: 1 1 45%;
-        }
-        .mobility-image img {
-            width: 100%;
-            border-radius: 20px;
-            object-fit: cover;
-            height: 250px;
-        }
-        /* === Contenu texte === */
-        .mobility-content {
-            flex: 1 1 55%;
-        }
-        .mobility-content h3 {
-            color: #1a1f71;
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-        }
-        .mobility-content p {
-            color: #444;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            text-align: justify;
-        }
-        /* === Responsive === */
-        @media (max-width: 900px) {
-            .mobility-card {
-                flex-direction: column;
-                padding: 25px;
-            }
-            .mobility-image img {
-                height: 200px;
-            }
-        }
-        
-        /* === ENGINEERING COURSE – 2 + 1 LAYOUT FINAL VERSION === */
-        #course {
-            width: 100%;
-            background: linear-gradient(120deg, #f9fbff, #eef3fb);
-            border-radius: 15px;
-            padding: 80px 60px;
-            margin-top: 70px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-        }
-        #course h2 {
-            text-align: center;
-            color: #1a1f71;
-            margin-bottom: 25px;
-            font-size: 2rem;
-        }
-        #course .intro {
-            text-align: center;
-            max-width: 1100px;
-            margin: 0 auto 55px;
-            color: #444;
-            font-size: 1.1rem;
-            line-height: 1.7;
-        }
-        /* === Container global === */
-        .course-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-        }
-        /* === Cartes projets === */
-        .course-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            padding: 40px 35px;
-            flex: 1 1 calc(50% - 40px); /* ✅ deux par ligne */
-            max-width: 600px; /* largeur max pour éviter qu’elles s’étirent trop */
-            height: auto;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .course-card:nth-child(3) {
-            flex-basis: 100%; /* ✅ la troisième prend toute la ligne */
-            display: flex;
-            justify-content: center;
-        }
-        .course-card:nth-child(3) > div {
-            max-width: 600px; /* ✅ centrage et largeur uniforme */
-        }
-        .course-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
-        }
-        .course-icon {
-            font-size: 2.6rem;
-            margin-bottom: 15px;
-            color: #f1c40f;
-            text-align: center;
-        }
-        .course-card h3 {
-            color: #1a1f71;
-            font-size: 1.3rem;
-            margin-bottom: 12px;
-            text-align: center;
-        }
-        .course-card p {
-            color: #444;
-            font-size: 1.05rem;
-            line-height: 1.7;
-            text-align: justify;
-        }
-        /* === Étiquettes (tags) === */
-        .tags {
-            margin-top: 18px;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-        .tags span {
-            background: #1a1f71;
-            color: white;
-            padding: 7px 15px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            transition: background 0.3s;
-        }
-        .tags span:hover {
-            background: #f1c40f;
-            color: #1a1f71;
-        }
-        /* === Citation finale === */
-        #course blockquote {
-            margin-top: 55px;
-            text-align: center;
-            font-style: italic;
-            color: #1a1f71;
-            font-size: 1rem;
-            max-width: 950px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        /* === CAREER DEVELOPMENT SECTION === */
-        #career {
-            background: linear-gradient(120deg, #f9fbff, #eef3fb);
-            padding: 80px 60px;
-            border-radius: 15px;
-            margin-top: 70px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
-            text-align: center;
-        }
-        #career h2 {
-            color: #1a1f71;
-            font-size: 2rem;
-            margin-bottom: 30px;
-        }
-        /* === CV Buttons === */
-        .cv-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
-        }
-        .cv-btn {
-            background: #1a1f71;
-            color: white;
-            padding: 12px 25px;
-            border-radius: 30px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .cv-btn:hover {
-            background: #f1c40f;
-            color: #1a1f71;
-            transform: translateY(-3px);
-        }
-        /* === Career Cards === */
-        .career-options {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-        .career-card {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            width: 320px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: center;
-        }
-        .career-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
-        .career-card:hover img {
-            transform: scale(1.05);
-        }
-        .career-card h3 {
-            color: #1a1f71;
-            font-size: 1.2rem;
-            margin: 15px 0 20px;
-        }
-        .career-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
-        }
-        /* === Dynamic Content with Animation === */
-        .career-content {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 50px;
-            text-align: left;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.6s ease;
-            pointer-events: none;
-        }
-        .career-content.active {
-            opacity: 1;
-            transform: translateY(0);
-            pointer-events: all;
-        }
-        .career-content h4 {
-            color: #1a1f71;
-            margin-bottom: 15px;
-        }
-        .career-content p {
-            color: #444;
-            line-height: 1.7;
-            font-size: 1rem;
-        }
-        .placeholder {
-            color: #777;
-            text-align: center;
-            font-style: italic;
-            opacity: 0.8;
-            transition: opacity 0.4s ease;
-        }
-        /* Fade animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        /* Styles additionnels pour les autres sections (Sustainability/Sports) */
-        
-        /* Images inside cards */
-        .civic-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        
-        /* Text inside cards */
-        .civic-card h3 {
-            color: #1a1f71;
-            font-size: 1.1rem;
-            margin-top: 8px;
-        }
-        
-        .civic-card p {
-            font-size: 0.95rem;
-            color: #444;
-            line-height: 1.5;
-        }
-        
-        /* === SUMMER JOBS CARDS === */
-        .summer-grid {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 25px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        
-        .summer-card {
-            background: white;
-            border-radius: 18px;
-            width: 300px;
-            padding: 22px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-            transition: 0.35s ease;
-            text-align: center;
-        }
-        
-        .summer-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-        }
-        
-        .summer-card img {
-            width: 100%;
-            height: 180px;
-            border-radius: 12px;
-            object-fit: cover;
-            margin-bottom: 15px;
-        }
-        
-        .summer-card h3 {
-            color: #1a1f71;
-            margin-bottom: 10px;
-            font-size: 1.15rem;
-        }
-        
-        .summer-card p {
-            font-size: 0.95rem;
-            color: #555;
-            line-height: 1.55;
-        }
-        
-        .course-card {
-            display: block !important;
-            text-align: left;
-        }
-        
-        .course-card p {
-            text-align: justify;
-        }
-        
-        .course-card .tags {
-            display: flex;
-            gap: 10px;
-            margin-top: 15px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Aya Najahi - Engineering Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+   
+    /* Espacement entre le titre "Sport & Other Activities" et le contenu */
+#sports h2 {
+  margin-bottom: 40px; /* ajoute de l’espace sous le titre */
+}
+/* Espacement supplémentaire entre chaque bloc d’activité */
+#sports > div {
+  margin-top: 25px;
+}
+    body {
+      background: #f9fafc;
+      color: #333;
+      line-height: 1.6;
+      scroll-behavior: smooth;
+    }
+    /* Navigation */
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: white;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      padding: 15px 0;
+      z-index: 1000;
+    }
+    nav a {
+      color: #1a1f71;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+    nav a:hover {
+      color: #f1c40f;
+    }
+    /* Sections */
+    section {
+      display: none !important; /* Force le masquage */
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.6s ease;
+      padding: 100px 20px 60px;
+    }
+    section.active {
+      display: block !important; /* Force l'affichage par défaut */
+      opacity: 1;
+      transform: translateY(0);
+    }
+/* 🔑 Correction 2. La section Home a besoin d'un display: flex; mais UNIQUEMENT quand elle est active. */
+    #home.active {
+      display: flex !important;
+    }
+   
+    /* Footer style modernisé avec email + LinkedIn à droite */
+footer {
+  position: relative;
+  background: #1a1f71;
+  color: white;
+  padding: 18px 20px;
+  font-size: 0.9rem;
+  margin-top: 60px;
+  text-align: center;
+}
+/* Conteneur à droite */
+.footer-right {
+  position: absolute;
+  right: 20px;
+  bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+/* Email link */
+footer .email-link {
+  color: #f1c40f;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+footer .email-link:hover {
+  color: white;
+  text-decoration: underline;
+}
+/* LinkedIn icon link */
+footer .linkedin-link svg {
+  transition: transform 0.3s ease, fill 0.3s ease;
+}
+footer .linkedin-link:hover svg {
+  transform: scale(1.2);
+  fill: white;
+}
+/* Responsive – recentre sur mobile */
+@media (max-width: 600px) {
+  footer {
+    text-align: center;
+  }
+  .footer-right {
+    position: static;
+    justify-content: center;
+    margin-top: 8px;
+  }
+}
+    /* === Bandeau Intro / Home Section === */
+    #home {
+      min-height: 100vh;
+      flex-direction: column; /* ⚠️ display: flex; A ÉTÉ RETIRÉ ICI pour la correction 2 */
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      background: linear-gradient(120deg, #ffffff, #f0f3f9);
+      animation: fadeSlideIn 1.5s ease-out forwards;
+      opacity: 0;
+      transform: translateY(40px);
+    }
+    @keyframes fadeSlideIn {
+      0% {
+        opacity: 0;
+        transform: translateY(40px);
+        filter: blur(6px);
+      }
+      60% {
+        opacity: 0.8;
+        transform: translateY(10px);
+        filter: blur(2px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+    #home img {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #f1c40f;
+      margin-bottom: 20px;
+      animation: zoomIn 1.2s ease-out 0.3s forwards;
+      opacity: 0;
+    }
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.8);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+    #home h1 {
+      font-size: 2.3rem;
+      color: #1a1f71;
+      margin-bottom: 10px;
+      opacity: 0;
+      animation: fadeTextIn 1s ease-out 0.6s forwards;
+    }
+    #home p {
+      max-width: 700px;
+      font-size: 1.1rem;
+      color: #444;
+      margin: 0 auto 30px;
+      opacity: 0;
+      animation: fadeTextIn 1.2s ease-out 1s forwards;
+    }
+    @keyframes fadeTextIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeTextIn 1s ease-out 1.3s forwards;
+    }
+    .buttons a {
+      text-decoration: none;
+      background: #1a1f71;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 30px;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+    .buttons a:hover {
+      background: #f1c40f;
+      color: #1a1f71;
+    }
+    /* Other Sections */
+    section:not(#home) {
+      max-width: 950px;
+      margin: 120px auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      padding: 40px 50px;
+    }
+    section h2 {
+      font-size: 1.9rem;
+      color: #1a1f71;
+      border-left: 5px solid #f1c40f;
+      padding-left: 10px;
+      margin-bottom: 25px;
+    }
+    section p {
+      margin-bottom: 15px;
+      color: #444;
+    }
+    footer {
+      text-align: center;
+      background: #1a1f71;
+      color: white;
+      padding: 18px;
+      font-size: 0.9rem;
+      margin-top: 60px;
+    }
+    /* Sustainability section cards */
+    #sustainability {
+      background: #f0f7fb;
+      padding: 60px 40px;
+      border-radius: 15px;
+      margin-top: 60px;
+    }
+    #sustainability h2 {
+      color: #1a1f71;
+      text-align: center;
+      margin-bottom: 25px;
+      font-size: 1.9rem;
+    }
+    #sustainability > p {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 40px;
+      color: #444;
+      font-size: 1.05rem;
+    }
+    .civic-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 25px;
+      justify-content: center;
+    }
+    .civic-card {
+      background: white;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      padding: 25px;
+      flex: 1;
+      min-width: 290px;
+      max-width: 400px;
+      text-align: left;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .civic-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    }
+    .civic-card h3 {
+      color: #1a1f71;
+      font-size: 1.1rem;
+      margin-top: 8px;
+    }
+    #sustainability blockquote {
+      margin-top: 40px;
+      text-align: center;
+      font-style: italic;
+      color: #1a1f71;
+      font-size: 1rem;
+    }
+/* === MOBILITY SECTION === */
+#mobility {
+  width: 100%;
+  background: linear-gradient(120deg, #f9fbff, #eef3fb);
+  border-radius: 15px;
+  padding: 80px 60px;
+  margin-top: 70px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+#mobility h2 {
+  text-align: center;
+  color: #1a1f71;
+  font-size: 2rem;
+  margin-bottom: 25px;
+}
+#mobility .intro {
+  text-align: center;
+  max-width: 950px;
+  margin: 0 auto 60px;
+  color: #444;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+/* === Container global === */
+.mobility-container {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  align-items: center;
+}
+/* === Carte de mobilité === */
+.mobility-card {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  background: #fff;
+  border-radius: 25px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  max-width: 1100px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.mobility-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+/* === Image === */
+.mobility-image {
+  flex: 1 1 45%;
+}
+.mobility-image img {
+  width: 100%;
+  border-radius: 20px;
+  object-fit: cover;
+  height: 250px;
+}
+/* === Contenu texte === */
+.mobility-content {
+  flex: 1 1 55%;
+}
+.mobility-content h3 {
+  color: #1a1f71;
+  font-size: 1.4rem;
+  margin-bottom: 15px;
+}
+.mobility-content p {
+  color: #444;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+/* === Responsive === */
+@media (max-width: 900px) {
+  .mobility-card {
+    flex-direction: column;
+    padding: 25px;
+  }
+  .mobility-image img {
+    height: 200px;
+  }
+}
+ 
+ /* === ENGINEERING COURSE – 2 + 1 LAYOUT FINAL VERSION === */
+#course {
+  width: 100%;
+  background: linear-gradient(120deg, #f9fbff, #eef3fb);
+  border-radius: 15px;
+  padding: 80px 60px;
+  margin-top: 70px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+#course h2 {
+  text-align: center;
+  color: #1a1f71;
+  margin-bottom: 25px;
+  font-size: 2rem;
+}
+#course .intro {
+  text-align: center;
+  max-width: 1100px;
+  margin: 0 auto 55px;
+  color: #444;
+  font-size: 1.1rem;
+  line-height: 1.7;
+}
+/* === Container global === */
+.course-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 40px;
+}
+/* === Cartes projets === */
+.course-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  padding: 40px 35px;
+  flex: 1 1 calc(50% - 40px); /* ✅ deux par ligne */
+  max-width: 600px; /* largeur max pour éviter qu’elles s’étirent trop */
+  height: auto;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.course-card:nth-child(3) {
+  flex-basis: 100%; /* ✅ la troisième prend toute la ligne */
+  display: flex;
+  justify-content: center;
+}
+.course-card:nth-child(3) > div {
+  max-width: 600px; /* ✅ centrage et largeur uniforme */
+}
+.course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+}
+.course-icon {
+  font-size: 2.6rem;
+  margin-bottom: 15px;
+  color: #f1c40f;
+  text-align: center;
+}
+.course-card h3 {
+  color: #1a1f71;
+  font-size: 1.3rem;
+  margin-bottom: 12px;
+  text-align: center;
+}
+.course-card p {
+  color: #444;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  text-align: justify;
+}
+/* === Étiquettes (tags) === */
+.tags {
+  margin-top: 18px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+}
+.tags span {
+  background: #1a1f71;
+  color: white;
+  padding: 7px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  transition: background 0.3s;
+}
+.tags span:hover {
+  background: #f1c40f;
+  color: #1a1f71;
+}
+/* === Citation finale === */
+#course blockquote {
+  margin-top: 55px;
+  text-align: center;
+  font-style: italic;
+  color: #1a1f71;
+  font-size: 1rem;
+  max-width: 950px;
+  margin-left: auto;
+  margin-right: auto;
+}
+/* === CAREER DEVELOPMENT SECTION === */
+#career {
+  background: linear-gradient(120deg, #f9fbff, #eef3fb);
+  padding: 80px 60px;
+  border-radius: 15px;
+  margin-top: 70px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+  text-align: center;
+}
+#career h2 {
+  color: #1a1f71;
+  font-size: 2rem;
+  margin-bottom: 30px;
+}
+/* === CV Buttons === */
+.cv-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 50px;
+  flex-wrap: wrap;
+}
+.cv-btn {
+  background: #1a1f71;
+  color: white;
+  padding: 12px 25px;
+  border-radius: 30px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+.cv-btn:hover {
+  background: #f1c40f;
+  color: #1a1f71;
+  transform: translateY(-3px);
+}
+/* === Career Cards === */
+.career-options {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+.career-card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 320px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+.career-card img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.career-card:hover img {
+  transform: scale(1.05);
+}
+.career-card h3 {
+  color: #1a1f71;
+  font-size: 1.2rem;
+  margin: 15px 0 20px;
+}
+.career-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+/* === Dynamic Content with Animation === */
+.career-content {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 50px;
+  text-align: left;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+  pointer-events: none;
+}
+.career-content.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: all;
+}
+.career-content h4 {
+  color: #1a1f71;
+  margin-bottom: 15px;
+}
+.career-content p {
+  color: #444;
+  line-height: 1.7;
+  font-size: 1rem;
+}
+.placeholder {
+  color: #777;
+  text-align: center;
+  font-style: italic;
+  opacity: 0.8;
+  transition: opacity 0.4s ease;
+}
+/* Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+/* Fade animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+  </style>
 </head>
 <body>
-    <nav>
-        <a data-target="home">Home</a>
-        <a data-target="course">Engineering Course</a>
-        <a data-target="mobility">Mobility</a>
-        <a data-target="sustainability">Sustainability & Civic Engagement</a>
-        <a data-target="sports">Sport & Activities</a>
-        <a data-target="career">Career Development</a>
-    </nav>
-    
-    <section id="home">
-        <img src="https://via.placeholder.com/160" alt="Aya Photo">
-        <h1>Hi! I’m Aya Najahi</h1>
-        <p>Hello and welcome! I’m Aya Najahi, first-year Computer Sciences engineering student at ENSEEIHT Toulouse.Through this e-portfolio, I share my projects, experiences, and ambitions — a glimpse into how I’m learning to turn curiosity and innovation into meaningful engineering solutions.</p>
-        <div class="buttons">
-            <a href="CV_Aya_Najahi.pdf" download>📄 View My Resume</a>
-            <a href="https://www.youtube.com/watch?v=your_video_id_here" target="_blank">🎥 Watch My Video</a>
-        </div>
-    </section>
+  <nav>
+    <a data-target="home">Home</a>
+    <a data-target="course">Engineering Course</a>
+    <a data-target="mobility">Mobility</a>
+    <a data-target="sustainability">Sustainability & Civic Engagement</a>
+    <a data-target="sports">Sport & Activities</a>
+    <a data-target="career">Career Development</a>
+   
+  </nav>
+    <section id="home" class="active">    <img src="https://via.placeholder.com/160" alt="Aya Photo">
+  <h1>Hi! I’m Aya Najahi</h1>
+  <p>Hello and welcome! I’m Aya Najahi, first-year Computer Sciences engineering student at ENSEEIHT Toulouse.Through this e-portfolio, I share my projects, experiences, and ambitions — a glimpse into how I’m learning to turn curiosity and innovation into meaningful engineering solutions.</p>
+  <div class="buttons">
+    <a href="CV_Aya_Najahi.pdf" download>📄 View My Resume</a>
+    <a href="https://www.youtube.com/watch?v=your_video_id_here" target="_blank">🎥 Watch My Video</a>
+  </div>
+</section>
+<section id="course">
+  <h2>Engineering Course</h2>
+  <p class="intro">
+    During my academic journey, including my engineering studies at
+    <strong>ENSEEIHT Toulouse</strong>, I’ve learned to blend theory and practice
+    through hands-on projects that challenge creativity, logic, and teamwork.
+    Here are some of the key projects that reflect my learning journey:
+  </p>
+  <div class="course-container">
+        <div class="course-card">
+      <div class="course-icon">🎸</div>
+      <h3>Adaptive Guitar Tuning System</h3>
+      <p>
+        A real-time <strong>Arduino-based system</strong> capable of automatically tuning a guitar
+        by detecting string frequencies and adjusting tension using servo motors.
+        This project deepened my understanding of <em>signal processing</em>,
+        <em>control systems</em>, and <em>embedded programming</em>.
+      </p>
+      <div class="tags">
+        <span>Arduino</span><span>Signal Processing</span><span>Automation</span>
+      </div>
+    </div>
+        <div class="course-card">
+      <div class="course-icon">📊</div>
+      <h3>Environmental Data Visualization Dashboard</h3>
+      <p>
+        An interactive dashboard built in <strong>Python</strong> using
+        <em>Matplotlib</em> and <em>Plotly</em> to visualize environmental trends such as
+        temperature and air quality.
+        This work highlights how <em>data visualization</em> supports
+        <strong>sustainability</strong> and informed decision-making.
+      </p>
+      <div class="tags">
+        <span>Python</span><span>Data Analysis</span><span>Plotly</span>
+      </div>
+    </div>
+        <div class="course-card">
+      <div class="course-icon">🧮</div>
+      <h3>Interactive Multiplication Trainer (ADA)</h3>
+      <p>
+        Developed in <strong>ADA</strong> during my first year at ENSEEIHT, this program provides
+        an interactive interface to help users revise multiplication tables.
+        It selects random questions, evaluates responses instantly,
+        and offers a playful learning experience.
+      </p>
+      <div class="tags">
+        <span>ADA</span><span>User Interaction</span><span>Logic</span>
+      </div>
+    </div>
+        <div class="course-card">
+      <div class="course-icon">🌐</div>
+      <h3>Mon Espace Éducatif — Learning Support Platform</h3>
+      <p>
+        Created during a regional innovation competition in Morocco,
+        <strong>Mon Espace Éducatif</strong> is a collaborative platform designed to support students
+        with shared resources, study groups, and structured learning tools.
+        This project strengthened my experience in <em>front-end development</em>,
+        <em>user-centered design</em>, and <em>team project coordination</em>.
+      </p>
+      <div class="tags">
+        <span>Web Development</span><span>UI/UX Design</span><span>Educational Innovation</span>
+      </div>
+      <p style="font-style: italic; color:#666; margin-top:10px;">
+        → A project that reflects my commitment to making learning more accessible.
+      </p>
+    </div>
 
-    <section id="course">
-        <h2>Engineering Course</h2>
-        <p class="intro">
-            During my academic journey, including my engineering studies at
-            <strong>ENSEEIHT Toulouse</strong>, I’ve learned to blend theory and practice
-            through hands-on projects that challenge creativity, logic, and teamwork.
-            Here are some of the key projects that reflect my learning journey:
-        </p>
-        <div class="course-container">
-            <div class="course-card">
-                <div class="course-icon">🎸</div>
-                <h3>Adaptive Guitar Tuning System</h3>
-                <p>
-                    A real-time <strong>Arduino-based system</strong> capable of automatically tuning a guitar
-                    by detecting string frequencies and adjusting tension using servo motors.
-                    This project deepened my understanding of <em>signal processing</em>,
-                    <em>control systems</em>, and <em>embedded programming</em>.
-                </p>
-                <div class="tags">
-                    <span>Arduino</span><span>Signal Processing</span><span>Automation</span>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="course-icon">📊</div>
-                <h3>Environmental Data Visualization Dashboard</h3>
-                <p>
-                    An interactive dashboard built in <strong>Python</strong> using
-                    <em>Matplotlib</em> and <em>Plotly</em> to visualize environmental trends such as
-                    temperature and air quality.
-                    This work highlights how <em>data visualization</em> supports
-                    <strong>sustainability</strong> and informed decision-making.
-                </p>
-                <div class="tags">
-                    <span>Python</span><span>Data Analysis</span><span>Plotly</span>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="course-icon">🧮</div>
-                <h3>Interactive Multiplication Trainer (ADA)</h3>
-                <p>
-                    Developed in <strong>ADA</strong> during my first year at ENSEEIHT, this program provides
-                    an interactive interface to help users revise multiplication tables.
-                    It selects random questions, evaluates responses instantly,
-                    and offers a playful learning experience.
-                </p>
-                <div class="tags">
-                    <span>ADA</span><span>User Interaction</span><span>Logic</span>
-                </div>
-            </div>
-            <div class="course-card">
-                <div class="course-icon">🌐</div>
-                <h3>Mon Espace Éducatif — Learning Support Platform</h3>
-                <p>
-                    Created during a regional innovation competition in Morocco,
-                    <strong>Mon Espace Éducatif</strong> is a collaborative platform designed to support students
-                    with shared resources, study groups, and structured learning tools.
-                    This project strengthened my experience in <em>front-end development</em>,
-                    <em>user-centered design</em>, and <em>team project coordination</em>.
-                </p>
-                <div class="tags">
-                    <span>Web Development</span><span>UI/UX Design</span><span>Educational Innovation</span>
-                </div>
-                <p style="font-style: italic; color:#666; margin-top:10px;">
-                    → A project that reflects my commitment to making learning more accessible.
-                </p>
-            </div>
-        </div>
-        <blockquote>
-            “These projects taught me how to turn abstract ideas into working prototypes — combining precision, creativity, and collaboration.”
-        </blockquote>
-    </section>
+  </div>
 
-    <section id="mobility">
-        <h2>Mobility</h2>
-        <p class="intro">
-            Even though I came from abroad, I see mobility as an essential part of my training.
-            I am eager to undertake an international mobility experience in order to expand my technical skills,
-            immerse myself in a new cultural and academic environment, and build a global professional network.
-        </p>
-        <div class="mobility-container">
-            <div class="mobility-card">
-                <div class="mobility-image">
-                    <img src="georgia.jpeg" alt="Georgia Institute of Technology">
-                </div>
-                <div class="mobility-content">
-                    <h3>🇺🇸 United States – Georgia Institute of Technology</h3>
-                    <p>
-                        Through the partnership that ENSEEIHT maintains with <strong>Georgia Tech</strong>,
-                        I could spend a semester or a year at this world-renowned university,
-                        benefiting from a rigorous engineering curriculum and a truly international campus environment.
-                        This experience would allow me to deepen my expertise in computer science,
-                        improve my English proficiency, and strengthen my ability to thrive in an international engineering context.
-                    </p>
-                </div>
-            </div>
-            <div class="mobility-card">
-                <div class="mobility-image">
-                    <img src="wohan.jpeg" alt="Wuhan University">
-                </div>
-                <div class="mobility-content">
-                    <h3>🇨🇳 China – Wuhan University</h3>
-                    <p>
-                        Among ENSEEIHT’s international partners, <strong>Wuhan University</strong> stands out as a leading institution.
-                        Choosing this destination would allow me to engage with a rich and dynamic culture,
-                        understand engineering challenges from an Asian perspective,
-                        and develop adaptability in a rapidly evolving environment.
-                        This opportunity would be particularly valuable given China’s global influence in technological innovation
-                        and the potential to collaborate on <em>cross-cultural engineering projects</em>.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+  <blockquote>
+    “These projects taught me how to turn abstract ideas into working prototypes — combining precision, creativity, and collaboration.”
+  </blockquote>
+</section>
 
-    <section id="sustainability">
-        <h2>Sustainability & Civic Engagement</h2>
-        <p>Through different initiatives, I’ve explored how technology, empathy, and teamwork can contribute to a more responsible and inclusive society. Here are some of the civic and sustainable activities I’ve taken part in:</p>
-        
-        <div class="civic-container">
-            
-            <div class="civic-card">
-                
-                <h3>🤝 Visit to a Retirement Home</h3>
-                <p>With friends, I organized a visit to a local retirement home. We brought clothes and food, spent time listening to residents' stories, played games, and shared moments that highlighted how simple gestures create meaningful connections across generations.</p>
-            </div>
-            
-            <div class="civic-card">
-                
-                <h3>🌍 Fresque du Climat</h3>
-                <p>I participated in the <strong>Fresque du Climat</strong> workshop, where I learned about the causes and consequences of climate change. It was a collaborative and eye-opening experience that deepened my understanding of environmental challenges and the importance of collective action.</p>
-            </div>
-            
-            <div class="civic-card">
-                <h3>♻️ Atelier “2 Tonnes”</h3>
-                <p>During the <strong>2 Tonnes workshop</strong>, I calculated my carbon footprint and worked in a team to create a transition scenario toward a low-carbon future by 2050. This activity helped me better understand both individual and collective levers for environmental transition.</p>
-            </div>
-            
-            <div class="civic-card">
-                <h3>🎭 “Le Procès de King-Kong”</h3>
-                <p>I attended this interactive theater at the Frebentree, ENSEEIHT. The play tackled gender-based and sexual violence through a thought-provoking performance. I participated in the post-play debate, which opened discussions about respect, equality, and the role of art in social awareness.</p>
-            </div>
-            
-            <div class="civic-card">
-                <h3>🎬 Ciné-débat : “Picture a Scientist”</h3>
-                <p>I attended this <strong>movie-debate</strong> at ENSEEIHT, featuring the documentary <em>“Picture a Scientist.”</em> The screening and discussion highlighted gender inequalities in research and in the same day I attended the <strong>Matilda Effect</strong>’s presentation — the tendency to overlook women’s scientific contributions. Participating in this event strengthened my awareness of equality issues in STEM fields.</p>
-            </div>
-            
-        </div>
-        
-        <blockquote>
-            “Through these experiences, I’ve developed empathy, environmental awareness, and a sense of collective responsibility — values I aim to carry forward in my journey as an engineer.”
-        </blockquote>
-    </section>
 
-    <section id="sports">
-        <h2>Sport & Other Activities</h2>
-        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-bottom:30px;">
-            <img src="basket.jpeg" alt="People playing basketball" width="350">
-            
-            <div style="flex:1;min-width:220px;">
-                <p style="margin-bottom:8px;"><strong>Basketball</strong></p>
-                <p>
-                    I regularly play basketball. It’s a dynamic sport that enhances coordination, teamwork, and quick decision-making.
-                    
-                </p>
-            </div>
-        </div>
-        
-        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-bottom:30px;">
-            <div style="flex:1;min-width:220px;">
-                <p style="margin-bottom:8px;"><strong>Swimming</strong></p>
-                <p>
-                    I also practice swimming, a sport that develops endurance, rhythm, and concentration. It helps me maintain a healthy balance between body and mind,
-                    while strengthening perseverance.
-                </p>
-            </div>
-            <img src="nata.jpeg" alt="Swimming activity in pool" width="350">
-            
-        </div>
-        
-        <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;">
-            <img src="travel.avif" alt="People cooking together" width="350">
-            
-            <div style="flex:1;min-width:220px;">
-                <p style="margin-bottom:8px;"><strong>Traveling</strong></p>
-                <p>
-                    I enjoy traveling and discovering new cultures even through small trips and local experiences.
-                </p>
-            </div>
-        </div>
-    </section>
+  <section id="mobility">
+  <h2>Mobility</h2>
 
-    <section id="career">
-        <h2>Career Development</h2>
-        
-        <div class="cv-buttons">
-            <a href="CV_Aya_Najahi_FR.pdf" target="_blank" class="cv-btn">📄 Resume in French</a>
-            <a href="https://www.linkedin.com/in/aya-najahi-86b1b1387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="cv-btn linkedin-btn">
-                🔗 My LinkedIn
-            </a>
-            <a href="cv ang.pdf" target="_blank" class="cv-btn">📄 Resume in English</a>
-        </div>
-        
-        <div class="career-options">
-            <div class="career-card" data-target="project">
-                <img src="PPP.jpeg" alt="Professional Project">
-                <h3>🎯 Personal & Professional Project</h3>
-            </div>
-            
-            <div class="career-card" data-target="summer">
-                <img src="summer.png" alt="Summer Jobs">
-                <h3>💼 Summer Jobs & Experiences</h3>
-            </div>
-        </div>
-        
-        <div id="career-content" class="career-content">
-            <p class="placeholder">Click on a section above to discover more details about my career path.</p>
-        </div>
-    </section>
-    
-    <footer>
-        © 2025 Aya Najahi — ENSEEIHT Toulouse
-        <div class="footer-right">
-            <a href="mailto:najahiaya01@gmail.com" class="email-link">📧 najahiaya01@gmail.com</a>
-            <a href="https://www.linkedin.com/in/aya-najahi-86b1b1387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="linkedin-link" title="LinkedIn">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#f1c40f">
-                    <path d="M19 0h-14c-2.761 0-5 2.238-5 5v14c0 2.762 2.239 5 5 5h14c2.762 0 5-2.238 5-5v-14c0-2.762-2.238-5-5-5zm-11 19h-3v-10h3v10zm-1.5-11.271c-.966 0-1.75-.792-1.75-1.77 0-.978.784-1.77 1.75-1.77s1.75.792 1.75 1.77c0 .978-.784 1.77-1.75 1.77zm13.5 11.271h-3v-5.604c0-1.336-.026-3.056-1.861-3.056-1.863 0-2.149 1.454-2.149 2.958v5.702h-3v-10h2.881v1.367h.041c.402-.76 1.385-1.561 2.852-1.561 3.049 0 3.606 2.008 3.606 4.619v5.575z"/>
-                </svg>
-            </a>
-        </div>
-    </footer>
-    
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const navLinks = document.querySelectorAll('nav a');
-            const sections = document.querySelectorAll('section');
-            const homeSection = document.getElementById('home');
+  <p class="intro">
+    Even though I came from abroad, I see mobility as an essential part of my training. 
+    I am eager to undertake an international mobility experience in order to expand my technical skills, 
+    immerse myself in a new cultural and academic environment, and build a global professional network.
+  </p>
 
-            // 1. GESTION DU CHARGEMENT INITIAL (pour déclencher l'animation de Home)
-            // On ajoute la classe 'active' après un court délai pour que l'animation CSS se lance
-            if (homeSection) {
-                setTimeout(() => {
-                    homeSection.classList.add('active');
-                }, 10); // Délai très court pour lancer l'animation
-            }
+  <div class="mobility-container">
 
-            // 2. GESTION DE LA NAVIGATION (quand on clique sur les liens)
-            navLinks.forEach(link => {
-                link.addEventListener('click', () => {
-                    const target = link.getAttribute('data-target');
-                    sections.forEach(sec => {
-                        sec.classList.remove('active');
-                        // Réinitialiser la position de scroll au clic sur un lien
-                        if (sec.id === target) {
-                            sec.classList.add('active');
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
-                        }
-                    });
-                });
-            });
+        <div class="mobility-card">
+      <div class="mobility-image">
+        <img src="georgia.jpeg" alt="Georgia Institute of Technology">
+      </div>
+      <div class="mobility-content">
+        <h3>🇺🇸 United States – Georgia Institute of Technology</h3>
+        <p>
+          Through the partnership that ENSEEIHT maintains with <strong>Georgia Tech</strong>, 
+          I could spend a semester or a year at this world-renowned university, 
+          benefiting from a rigorous engineering curriculum and a truly international campus environment. 
+          This experience would allow me to deepen my expertise in computer science, 
+          improve my English proficiency, and strengthen my ability to thrive in an international engineering context.
+        </p>
+      </div>
+    </div>
 
-            // 3. GESTION DU CONTENU DYNAMIQUE CARRIÈRE (existant)
-            const careerCards = document.querySelectorAll('.career-card');
-            const careerContent = document.getElementById('career-content');
+        <div class="mobility-card">
+      <div class="mobility-image">
+        <img src="wohan.jpeg" alt="Wuhan University">
+      </div>
+      <div class="mobility-content">
+        <h3>🇨🇳 China – Wuhan University</h3>
+        <p>
+          Among ENSEEIHT’s international partners, <strong>Wuhan University</strong> stands out as a leading institution. 
+          Choosing this destination would allow me to engage with a rich and dynamic culture, 
+          understand engineering challenges from an Asian perspective, 
+          and develop adaptability in a rapidly evolving environment. 
+          This opportunity would be particularly valuable given China’s global influence in technological innovation 
+          and the potential to collaborate on <em>cross-cultural engineering projects</em>.
+        </p>
+      </div>
+    </div>
 
-            const contentMap = {
-                project: `
-                    <h4>🎯 Personal & Professional Project</h4>
-                    <p>
-                        As a student in <strong>Sciences du Numérique</strong> at <strong>ENSEEIHT</strong>, I am passionate about how
-                        digital technologies can create bridges between innovation and human needs.
-                        For me, engineering is not only about technical mastery, but also about <strong>impact, ethics, and collaboration</strong>.
-                    </p>
-                    <p>
-                        My goal is to become an engineer capable of designing <strong>intelligent, responsible and user-centered digital systems</strong>.
-                        I aim to work in environments where creativity, research, and human value drive technology.
-                    </p>
-                    <h4>🌱 My Professional Objectives</h4>
-                    <ul style="line-height:1.8; padding-left:15px;">
-                        <li>Deepen my knowledge in <strong>software engineering</strong>, <strong>AI</strong>, and <strong>data science</strong>.</li>
-                        <li>Contribute to digital innovation projects that have <strong>social or environmental impact</strong>.</li>
-                        <li>Develop a truly <strong>international professional perspective</strong> through academic mobility and multicultural teamwork.</li>
-                    </ul>
-                    <h4>🎙️ Interview & Reflection</h4>
-                    <p>
-                        To better understand the realities of the engineering field, I organized a remote interview with <strong>Emile Boutry</strong>, Industrial Cybersecurity Expert at <strong>STMicroelectronics</strong>.
-                        We discussed key challenges in cybersecurity and essential skills for protecting industrial systems. This exchange gave me valuable insight into the field and its professional realities.
-                    </p>
-                    <div style="text-align:center; margin-top:30px;">
-                        <a href="https://www.linkedin.com/in/emile-boutry-80646a171?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank"
-                            style="
-                                display:inline-block;
-                                background:#1a1f71;
-                                color:white;
-                                padding:12px 25px;
-                                border-radius:30px;
-                                text-decoration:none;
-                                font-weight:600;
-                                transition:0.3s;
-                            "
-                            onmouseover="this.style.background='#f1c40f'; this.style.color='#1a1f71';"
-                            onmouseout="this.style.background='#1a1f71'; this.style.color='white';"
-                        >
-                            🔗 View His LinkedIn Profile
-                        </a>
-                    </div>
-                    <p style="font-style: italic; color:#666; margin-top:20px;">
-                        → This project is a long-term journey — one that shapes me technically, intellectually, and personally.
-                    </p>
-                `,
-                
-                summer: `
-                    <h4>💼 Summer Jobs & Experiences</h4>
-                    <p>
-                        During summer periods, I have taken part in various work environments that strengthened my
-                        adaptability, teamwork, and ability to take initiative. These experiences helped me develop
-                        communication skills, responsibility, and an understanding of the value of commitment.
-                    </p>
-                    
-                    <div class="summer-grid">
-                        
-                        <div class="summer-card">
-                            <img src="cafe.jpeg" alt="Restaurant Assistant">
-                            <h3>🍽️ Restaurant Assistant</h3>
-                            <p>
-                                Assisted with service, preparation, and customer interaction.
-                                This job in <strong>Calipso</strong> Restaurant helped me improve my communication skills, time management,
-                                and sense of teamwork in a fast-paced environment.
-                            </p>
-                        </div>
-                        
-                        <div class="summer-card">
-                            <img src="camp.jpeg" alt="Summer Camp Helper">
-                            <h3>⛺ Summer Camp Helper</h3>
-                            <p>
-                                In Rabat summer camp in 2023 I helped in supervising groups, and contributing to team-building games.
-                                I learned leadership, responsibility, and how to manage dynamic social contexts.
-                            </p>
-                        </div>
-                        
-                        <div class="summer-card">
-                            <img src="farm.jpeg" alt="Farm Helper">
-                            <h3>🚜 Farm Helper</h3>
-                            <p>
-                                I Participated in agricultural tasks and maintenance work in a farm in southern Morocco.
-                                This experience taught me perseverance, physical endurance,
-                                and respect for essential labor supporting our communities.
-                            </p>
-                        </div>
-                        
-                    </div>
-                `
-            }; // end contentMap
+  </div>
+</section>
 
-            // click handling — shows content with short fade-out/fade-in
-            careerCards.forEach(card => {
-                card.addEventListener('click', () => {
-                    const target = card.getAttribute('data-target');
 
-                    // if no target or no content, do nothing
-                    if (!target || !contentMap[target]) return;
+ <section id="sustainability">
+  <h2>Sustainability & Civic Engagement</h2>
+  <p>Through different initiatives, I’ve explored how technology, empathy, and teamwork can contribute to a more responsible and inclusive society. Here are some of the civic and sustainable activities I’ve taken part in:</p>
 
-                    careerContent.classList.remove('active');
-                    setTimeout(() => {
-                        careerContent.innerHTML = contentMap[target];
-                        careerContent.classList.add('active');
-                    }, 200);
-                });
-            });
-        });
-    </script>
+  <div class="civic-container">
+  
+  <div class="civic-card">
+      
+      <h3>🤝 Visit to a Retirement Home</h3>
+      <p>With friends, I organized a visit to a local retirement home. We brought clothes and food, spent time listening to residents' stories, played games, and shared moments that highlighted how simple gestures create meaningful connections across generations.</p>
+    </div>
+    
+        <div class="civic-card">
+      
+      <h3>🌍 Fresque du Climat</h3>
+      <p>I participated in the <strong>Fresque du Climat</strong> workshop, where I learned about the causes and consequences of climate change. It was a collaborative and eye-opening experience that deepened my understanding of environmental challenges and the importance of collective action.</p>
+    </div>
+
+        <div class="civic-card">
+      <h3>♻️ Atelier “2 Tonnes”</h3>
+      <p>During the <strong>2 Tonnes workshop</strong>, I calculated my carbon footprint and worked in a team to create a transition scenario toward a low-carbon future by 2050. This activity helped me better understand both individual and collective levers for environmental transition.</p>
+    </div>
+
+        <div class="civic-card">
+      <h3>🎭 “Le Procès de King-Kong”</h3>
+      <p>I attended this interactive theater at the Frebentree, ENSEEIHT. The play tackled gender-based and sexual violence through a thought-provoking performance. I participated in the post-play debate, which opened discussions about respect, equality, and the role of art in social awareness.</p>
+    </div>
+
+        <div class="civic-card">
+      <h3>🎬 Ciné-débat : “Picture a Scientist”</h3>
+      <p>I attended this <strong>movie-debate</strong> at ENSEEIHT, featuring the documentary <em>“Picture a Scientist.”</em> The screening and discussion highlighted gender inequalities in research and in the same day I attended the <strong>Matilda Effect</strong>’s presentation — the tendency to overlook women’s scientific contributions. Participating in this event strengthened my awareness of equality issues in STEM fields.</p>
+    </div>
+
+  </div>
+
+  <blockquote>
+    “Through these experiences, I’ve developed empathy, environmental awareness, and a sense of collective responsibility — values I aim to carry forward in my journey as an engineer.”
+  </blockquote>
+</section>
+
+<style>
+/* Section style */
+#sustainability {
+  background: #f0f7fb;
+  padding: 60px 40px;
+  border-radius: 15px;
+  margin-top: 60px;
+}
+
+/* Title */
+#sustainability h2 {
+  color: #1a1f71;
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.9rem;
+}
+
+/* Intro paragraph */
+#sustainability > p {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 40px;
+  color: #444;
+  font-size: 1.05rem;
+}
+
+/* Cards container */
+.civic-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+}
+
+/* Each card */
+.civic-card {
+  background:linear-gradient(135deg, #eef5fa, #f9fcff) ;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 25px;
+  flex: 1;
+  min-width: 290px;
+  max-width: 400px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Card hover effect */
+.civic-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+/* Images inside cards */
+.civic-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Text inside cards */
+.civic-card h3 {
+  color: #1a1f71;
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+
+.civic-card p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+}
+
+/* Quote style */
+#sustainability blockquote {
+  margin-top: 40px;
+  text-align: center;
+  font-style: italic;
+  color: #1a1f71;
+  font-size: 1rem;
+}
+
+
+/* === SUMMER JOBS CARDS === */
+.summer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+.summer-card {
+  background: white;
+  border-radius: 18px;
+  width: 300px;
+  padding: 22px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: 0.35s ease;
+  text-align: center;
+}
+
+.summer-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+
+.summer-card img {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.summer-card h3 {
+  color: #1a1f71;
+  margin-bottom: 10px;
+  font-size: 1.15rem;
+}
+
+.summer-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.55;
+}
+
+
+
+.course-card {
+  display: block !important;
+  text-align: left;
+}
+
+.course-card p {
+  text-align: justify;
+}
+
+.course-card .tags {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+
+</style>
+
+
+
+
+  <section id="sports">
+  <h2>Sport & Other Activities</h2>
+  <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-bottom:30px;">
+    <img src="basket.jpeg" alt="People playing basketball" width="350">
+
+    <div style="flex:1;min-width:220px;">
+      <p style="margin-bottom:8px;"><strong>Basketball</strong></p>
+      <p>
+        I regularly play basketball. It’s a dynamic sport that enhances coordination, teamwork, and quick decision-making.
+        
+      </p>
+    </div>
+  </div>
+
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-bottom:30px;">
+    <div style="flex:1;min-width:220px;">
+      <p style="margin-bottom:8px;"><strong>Swimming</strong></p>
+      <p>
+        I also practice swimming, a sport that develops endurance, rhythm, and concentration. It helps me maintain a healthy balance between body and mind,
+        while strengthening perseverance.
+      </p>
+    </div>
+    <img src="nata.jpeg" alt="Swimming activity in pool" width="350">
+
+  </div>
+
+    <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;">
+    <img src="travel.avif" alt="People cooking together" width="350">
+
+    <div style="flex:1;min-width:220px;">
+      <p style="margin-bottom:8px;"><strong>Traveling</strong></p>
+      <p>
+       I enjoy traveling and discovering new cultures even through small trips and local experiences.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section id="career">
+  <h2>Career Development</h2>
+
+    <div class="cv-buttons">
+    <a href="CV_Aya_Najahi_FR.pdf" target="_blank" class="cv-btn">📄 Resume in French</a>
+     <a href="https://www.linkedin.com/in/aya-najahi-86b1b1387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="cv-btn linkedin-btn">
+    🔗 My LinkedIn
+  </a>
+    <a href="cv ang.pdf" target="_blank" class="cv-btn">📄 Resume in English</a>
+  </div>
+
+    <div class="career-options">
+    <div class="career-card" data-target="project">
+      <img src="PPP.jpeg" alt="Professional Project">
+      <h3>🎯 Personal & Professional Project</h3>
+        </div>
+
+    <div class="career-card" data-target="summer">
+      <img src="summer.png" alt="Summer Jobs">
+      <h3>💼 Summer Jobs & Experiences</h3>
+    </div>
+  </div>
+
+    <div id="career-content" class="career-content">
+    <p class="placeholder">Click on a section above to discover more details about my career path.</p>
+  </div>
+</section>
+
+
+  
+
+  <footer>
+    © 2025 Aya Najahi — ENSEEIHT Toulouse
+     <div class="footer-right">
+    <a href="mailto:najahiaya01@gmail.com" class="email-link">📧 najahiaya01@gmail.com</a>
+    <a href="https://www.linkedin.com/in/aya-najahi-86b1b1387?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" class="linkedin-link" title="LinkedIn">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="#f1c40f">
+        <path d="M19 0h-14c-2.761 0-5 2.238-5 5v14c0 2.762 2.239 5 5 5h14c2.762 
+                 0 5-2.238 5-5v-14c0-2.762-2.238-5-5-5zm-11 
+                 19h-3v-10h3v10zm-1.5-11.271c-.966 
+                 0-1.75-.792-1.75-1.77 0-.978.784-1.77 
+                 1.75-1.77s1.75.792 1.75 
+                 1.77c0 .978-.784 1.77-1.75 
+                 1.77zm13.5 11.271h-3v-5.604c0-1.336-.026-3.056-1.861-3.056-1.863 
+                 0-2.149 1.454-2.149 2.958v5.702h-3v-10h2.881v1.367h.041c.402-.76 
+                 1.385-1.561 2.852-1.561 3.049 0 3.606 
+                 2.008 3.606 4.619v5.575z"/>
+      </svg>
+    </a>
+  </div>
+  </footer>
+
+  <script>
+    const navLinks = document.querySelectorAll('nav a');
+    const sections = document.querySelectorAll('section'); // Modifié: 'header' retiré car non présent
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        const target = link.getAttribute('data-target');
+        sections.forEach(sec => {
+          sec.classList.remove('active');
+          if (sec.id === target) sec.classList.add('active');
+        });
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  </script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const careerCards = document.querySelectorAll('.career-card');
+  const careerContent = document.getElementById('career-content');
+
+  const contentMap = {
+    project: `
+      <h4>🎯 Personal & Professional Project</h4>
+
+      <p>
+        As a student in <strong>Sciences du Numérique</strong> at <strong>ENSEEIHT</strong>, I am passionate about how
+        digital technologies can create bridges between innovation and human needs.
+        For me, engineering is not only about technical mastery, but also about <strong>impact, ethics, and collaboration</strong>.
+      </p>
+
+      <p>
+        My goal is to become an engineer capable of designing <strong>intelligent, responsible and user-centered digital systems</strong>.
+        I aim to work in environments where creativity, research, and human value drive technology.
+      </p>
+
+      <h4>🌱 My Professional Objectives</h4>
+      <ul style="line-height:1.8; padding-left:15px;">
+        <li>Deepen my knowledge in <strong>software engineering</strong>, <strong>AI</strong>, and <strong>data science</strong>.</li>
+        <li>Contribute to digital innovation projects that have <strong>social or environmental impact</strong>.</li>
+        <li>Develop a truly <strong>international professional perspective</strong> through academic mobility and multicultural teamwork.</li>
+        </ul>
+
+      <h4>🎙️ Interview & Reflection</h4>
+      <p>
+        To better understand the realities of the engineering field, I organized a remote interview with <strong>Emile Boutry</strong>, Industrial Cybersecurity Expert at <strong>STMicroelectronics</strong>.
+We discussed key challenges in cybersecurity and essential skills for protecting industrial systems. This exchange gave me valuable insight into the field and its professional realities.
+      </p>
+
+
+      <div style="text-align:center; margin-top:30px;">
+        <a href="https://www.linkedin.com/in/emile-boutry-80646a171?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" 
+          style="
+            display:inline-block;
+            background:#1a1f71;
+            color:white;
+            padding:12px 25px;
+            border-radius:30px;
+            text-decoration:none;
+            font-weight:600;
+            transition:0.3s;
+          "
+          onmouseover="this.style.background='#f1c40f'; this.style.color='#1a1f71';"
+          onmouseout="this.style.background='#1a1f71'; this.style.color='white';"
+        >
+          🔗 View His LinkedIn Profile
+        </a>
+      </div>
+
+      <p style="font-style: italic; color:#666; margin-top:20px;">
+        → This project is a long-term journey — one that shapes me technically, intellectually, and personally.
+      </p>
+    `,
+
+    summer: `
+      <h4>💼 Summer Jobs & Experiences</h4>
+      <p>
+        During summer periods, I have taken part in various work environments that strengthened my
+        adaptability, teamwork, and ability to take initiative. These experiences helped me develop
+        communication skills, responsibility, and an understanding of the value of commitment.
+      </p>
+
+      <div class="summer-grid">
+
+        <div class="summer-card">
+          <img src="cafe.jpeg" alt="Restaurant Assistant">
+          <h3>🍽️ Restaurant Assistant</h3>
+          <p>
+            Assisted with service, preparation, and customer interaction.  
+            This job in <strong>Calipso</strong> Restaurant helped me improve my communication skills, time management,
+            and sense of teamwork in a fast-paced environment.
+          </p>
+        </div>
+
+        <div class="summer-card">
+          <img src="camp.jpeg" alt="Summer Camp Helper">
+          <h3>⛺ Summer Camp Helper</h3>
+          <p>
+            In Rabat summer camp in 2023 I helped in supervising groups, and contributing to team-building games.
+            I learned leadership, responsibility, and how to manage dynamic social contexts.
+          </p>
+        </div>
+
+        <div class="summer-card">
+          <img src="farm.jpeg" alt="Farm Helper">
+          <h3>🚜 Farm Helper</h3>
+          <p>
+            I Participated in agricultural tasks and maintenance work in a farm in southern Morocco.
+            This experience taught me perseverance, physical endurance,
+            and respect for essential labor supporting our communities.
+          </p>
+        </div>
+
+      </div>
+    `
+  }; // end contentMap
+
+  // click handling (kept as before) — shows content with short fade-out/fade-in
+  careerCards.forEach(card => {
+    card.addEventListener('click', () => {
+      const target = card.getAttribute('data-target');
+
+      // if no target or no content, do nothing
+      if (!target || !contentMap[target]) return;
+
+      careerContent.classList.remove('active');
+      setTimeout(() => {
+        careerContent.innerHTML = contentMap[target];
+        careerContent.classList.add('active');
+      }, 200);
+    });
+  });
+});
+</script>
+
+
 </body>
 </html>
