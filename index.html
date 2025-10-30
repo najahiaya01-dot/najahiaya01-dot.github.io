@@ -15,7 +15,7 @@
    
     /* Espacement entre le titre "Sport & Other Activities" et le contenu */
 #sports h2 {
-  margin-bottom: 40px; /* ajoute de l’espace sous le titre */
+  margin-bottom: 40px; 
 }
 /* Espacement supplémentaire entre chaque bloc d’activité */
 #sports > div {
@@ -52,7 +52,7 @@
     }
     /* Sections */
     section {
-      display: none !important; /* Force le masquage */
+      display: none !important; /* Force le masquage par défaut de TOUTES les sections */
       opacity: 0;
       transform: translateY(20px);
       transition: all 0.6s ease;
@@ -63,7 +63,7 @@
       opacity: 1;
       transform: translateY(0);
     }
-/* 🔑 Correction 2. La section Home a besoin d'un display: flex; mais UNIQUEMENT quand elle est active. */
+    /* CORRECTION: Appliquer display: flex UNIQUEMENT à Home quand elle est active */
     #home.active {
       display: flex !important;
     }
@@ -120,7 +120,7 @@ footer .linkedin-link:hover svg {
     /* === Bandeau Intro / Home Section === */
     #home {
       min-height: 100vh;
-      flex-direction: column; /* ⚠️ display: flex; A ÉTÉ RETIRÉ ICI pour la correction 2 */
+      flex-direction: column; /* display: flex; a été retiré ici et mis dans #home.active */
       align-items: center;
       justify-content: center;
       text-align: center;
@@ -232,15 +232,8 @@ footer .linkedin-link:hover svg {
       margin-bottom: 15px;
       color: #444;
     }
-    footer {
-      text-align: center;
-      background: #1a1f71;
-      color: white;
-      padding: 18px;
-      font-size: 0.9rem;
-      margin-top: 60px;
-    }
-    /* Sustainability section cards */
+    
+    /* Styles de la section Sustainability (similaires à la version précédente) */
     #sustainability {
       background: #f0f7fb;
       padding: 60px 40px;
@@ -267,7 +260,7 @@ footer .linkedin-link:hover svg {
       justify-content: center;
     }
     .civic-card {
-      background: white;
+      background:linear-gradient(135deg, #eef5fa, #f9fcff) ;
       border-radius: 15px;
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
       padding: 25px;
@@ -408,24 +401,24 @@ footer .linkedin-link:hover svg {
   justify-content: center;
   gap: 40px;
 }
-/* === Cartes projets === */
+/* === Cartes projets */
 .course-card {
   background: white;
   border-radius: 20px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
   padding: 40px 35px;
-  flex: 1 1 calc(50% - 40px); /* ✅ deux par ligne */
-  max-width: 600px; /* largeur max pour éviter qu’elles s’étirent trop */
+  flex: 1 1 calc(50% - 40px);
+  max-width: 600px;
   height: auto;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 .course-card:nth-child(3) {
-  flex-basis: 100%; /* ✅ la troisième prend toute la ligne */
+  flex-basis: 100%;
   display: flex;
   justify-content: center;
 }
 .course-card:nth-child(3) > div {
-  max-width: 600px; /* ✅ centrage et largeur uniforme */
+  max-width: 600px;
 }
 .course-card:hover {
   transform: translateY(-6px);
@@ -486,7 +479,6 @@ footer .linkedin-link:hover svg {
   padding: 80px 60px;
   border-radius: 15px;
   margin-top: 70px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
   text-align: center;
 }
 #career h2 {
@@ -587,27 +579,71 @@ footer .linkedin-link:hover svg {
   opacity: 0.8;
   transition: opacity 0.4s ease;
 }
-/* Fade animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* Styles additionnels pour les autres sections (Sustainability/Sports) */
+.civic-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
 }
-/* Fade animation */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.civic-card h3 {
+  color: #1a1f71;
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+.civic-card p {
+  font-size: 0.95rem;
+  color: #444;
+  line-height: 1.5;
+}
+.summer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 25px;
+  justify-content: center;
+  margin-top: 30px;
+}
+.summer-card {
+  background: white;
+  border-radius: 18px;
+  width: 300px;
+  padding: 22px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+  transition: 0.35s ease;
+  text-align: center;
+}
+.summer-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
+}
+.summer-card img {
+  width: 100%;
+  height: 180px;
+  border-radius: 12px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+.summer-card h3 {
+  color: #1a1f71;
+  margin-bottom: 10px;
+  font-size: 1.15rem;
+}
+.summer-card p {
+  font-size: 0.95rem;
+  color: #555;
+  line-height: 1.55;
+}
+.course-card {
+  display: block !important;
+  text-align: left;
+}
+.course-card p {
+  text-align: justify;
+}
+.course-card .tags {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
 }
   </style>
 </head>
@@ -621,7 +657,9 @@ footer .linkedin-link:hover svg {
     <a data-target="career">Career Development</a>
    
   </nav>
-    <section id="home" class="active">    <img src="https://via.placeholder.com/160" alt="Aya Photo">
+    
+        <section id="home" class="active">
+    <img src="https://via.placeholder.com/160" alt="Aya Photo">
   <h1>Hi! I’m Aya Najahi</h1>
   <p>Hello and welcome! I’m Aya Najahi, first-year Computer Sciences engineering student at ENSEEIHT Toulouse.Through this e-portfolio, I share my projects, experiences, and ambitions — a glimpse into how I’m learning to turn curiosity and innovation into meaningful engineering solutions.</p>
   <div class="buttons">
@@ -629,6 +667,7 @@ footer .linkedin-link:hover svg {
     <a href="https://www.youtube.com/watch?v=your_video_id_here" target="_blank">🎥 Watch My Video</a>
   </div>
 </section>
+    
 <section id="course">
   <h2>Engineering Course</h2>
   <p class="intro">
@@ -792,160 +831,6 @@ footer .linkedin-link:hover svg {
   </blockquote>
 </section>
 
-<style>
-/* Section style */
-#sustainability {
-  background: #f0f7fb;
-  padding: 60px 40px;
-  border-radius: 15px;
-  margin-top: 60px;
-}
-
-/* Title */
-#sustainability h2 {
-  color: #1a1f71;
-  text-align: center;
-  margin-bottom: 25px;
-  font-size: 1.9rem;
-}
-
-/* Intro paragraph */
-#sustainability > p {
-  text-align: center;
-  max-width: 800px;
-  margin: 0 auto 40px;
-  color: #444;
-  font-size: 1.05rem;
-}
-
-/* Cards container */
-.civic-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  justify-content: center;
-}
-
-/* Each card */
-.civic-card {
-  background:linear-gradient(135deg, #eef5fa, #f9fcff) ;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-  padding: 25px;
-  flex: 1;
-  min-width: 290px;
-  max-width: 400px;
-  text-align: left;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Card hover effect */
-.civic-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
-}
-
-/* Images inside cards */
-.civic-card img {
-  width: 100%;
-  height: 200px;
-  object-fit: cover;
-  border-radius: 10px;
-}
-
-/* Text inside cards */
-.civic-card h3 {
-  color: #1a1f71;
-  font-size: 1.1rem;
-  margin-top: 8px;
-}
-
-.civic-card p {
-  font-size: 0.95rem;
-  color: #444;
-  line-height: 1.5;
-}
-
-/* Quote style */
-#sustainability blockquote {
-  margin-top: 40px;
-  text-align: center;
-  font-style: italic;
-  color: #1a1f71;
-  font-size: 1rem;
-}
-
-
-/* === SUMMER JOBS CARDS === */
-.summer-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 25px;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-.summer-card {
-  background: white;
-  border-radius: 18px;
-  width: 300px;
-  padding: 22px;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.08);
-  transition: 0.35s ease;
-  text-align: center;
-}
-
-.summer-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 10px 28px rgba(0,0,0,0.12);
-}
-
-.summer-card img {
-  width: 100%;
-  height: 180px;
-  border-radius: 12px;
-  object-fit: cover;
-  margin-bottom: 15px;
-}
-
-.summer-card h3 {
-  color: #1a1f71;
-  margin-bottom: 10px;
-  font-size: 1.15rem;
-}
-
-.summer-card p {
-  font-size: 0.95rem;
-  color: #555;
-  line-height: 1.55;
-}
-
-
-
-.course-card {
-  display: block !important;
-  text-align: left;
-}
-
-.course-card p {
-  text-align: justify;
-}
-
-.course-card .tags {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-
-</style>
-
-
-
-
   <section id="sports">
   <h2>Sport & Other Activities</h2>
   <div style="display:flex;flex-wrap:wrap;align-items:center;gap:24px;margin-bottom:30px;">
@@ -1036,9 +921,9 @@ footer .linkedin-link:hover svg {
   </div>
   </footer>
 
-  <script>
+      <script>
     const navLinks = document.querySelectorAll('nav a');
-    const sections = document.querySelectorAll('section'); // Modifié: 'header' retiré car non présent
+    const sections = document.querySelectorAll('section');
 
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
@@ -1051,7 +936,8 @@ footer .linkedin-link:hover svg {
       });
     });
   </script>
-<script>
+
+    <script>
 document.addEventListener('DOMContentLoaded', () => {
   const careerCards = document.querySelectorAll('.career-card');
   const careerContent = document.getElementById('career-content');
@@ -1169,7 +1055,6 @@ We discussed key challenges in cybersecurity and essential skills for protecting
   });
 });
 </script>
-
 
 </body>
 </html>
